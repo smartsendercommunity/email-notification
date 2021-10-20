@@ -53,6 +53,11 @@ $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE); //convert JSON into array
 $headers = apache_request_headers();
 
+$dir = dirname($_SERVER["PHP_SELF"]);
+$url = ((!empty($_SERVER["HTTPS"])) ? "https" : "http") . "://" . $_SERVER["HTTP_HOST"] . $dir;
+$url = explode("?", $url);
+$url = $url[0];
+
 $Auth = explode(" ", $headers["Authorization"], 2);
 if ($Auth[0] == "Bearer") {
     $token = $Auth[1];
@@ -116,7 +121,7 @@ $header = "From: Smart Sender notifier <noreply@smartsender.com>\r\n"
     ."Content-type: text/html; charset=utf-8\r\n"
     ."X-Mailer: PHP mail script by \"Mufik Soft\"";
 $body = 
-str_ireplace("{projectPhoto}", $projectData["photo"], str_ireplace("{project}", $projectData["name"], str_ireplace("{body}", str_replace("\n", "<br>\n", str_replace("\r", "", $input["message"])), file_get_contents('mail.html'))));
+str_ireplace("{logoPhoto}", $url."/logo.png", str_ireplace("{syncPhoto}", $url."/sync.png", str_ireplace("{projectPhoto}", $projectData["photo"], str_ireplace("{project}", $projectData["name"], str_ireplace("{body}", str_replace("\n", "<br>\n", str_replace("\r", "", $input["message"])), file_get_contents('mail.html'))))));
 
 foreach ($sendTo as $send) {
     $mail = mail( $send["email"], mb_encode_mimeheader ("Smart Sender. Уведомление из проекта \"".$projectData["name"]."\"", 'utf-8'), $body, $header);
