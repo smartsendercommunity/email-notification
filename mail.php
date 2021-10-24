@@ -72,9 +72,8 @@ if ($input["token"] == NULL || $input["token"] == 'undefined') {
 
 // Получение данных о проекте
 $projectData = json_decode(get_bearer($token, "https://api.smartsender.com/v1/me"), true);
-if ($proectData["error"]["code"] > 222) {
+if ($projectData["error"]["code"] > 222) {
     http_response_code($projectData["error"]["code"]);
-    $projectData["server"] = "Server - https://api.soft-m.ml";
     echo json_encode($projectData);
     exit;
 }
