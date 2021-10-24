@@ -66,6 +66,8 @@ if ($input["token"] == NULL || $input["token"] == 'undefined') {
     $result["error"]["message"] = "Unauthenticated";
     echo json_encode($result);
     exit;
+} else {
+    $token = $input["token"];
 }
 
 // Получение данных о проекте
