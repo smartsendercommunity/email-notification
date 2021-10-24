@@ -60,10 +60,7 @@ $url = explode("?", $url);
 $url = $url[0];
 
 // Проверка входящего токена авторизации
-$Auth = explode(" ", $headers["Authorization"], 2);
-if ($Auth[0] == "Bearer") {
-    $token = $Auth[1];
-} else {
+if ($input["token"] == NULL || $input["token"] == 'undefined') {
     http_response_code(403);
     $result["error"]["code"] = 403;
     $result["error"]["message"] = "Unauthenticated";
