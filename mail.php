@@ -1,6 +1,6 @@
 <?php
 
-// ver 1.0 - 05.03.21
+// ver 1.3 - 22.10.21
 
 ini_set('max_execution_time', '1700');
 set_time_limit(1700);
